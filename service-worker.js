@@ -1,19 +1,19 @@
 const CACHE_NAME = '小雞掰-pwa-v2';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/app.js',
-  '/manifest.json',
-  '/offline.html',
-  '/main_character_01.png',
-  '/main_character_02.png',
-  '/main_character_03.png',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  '/Chick-Bitch/',
+  '/Chick-Bitch/index.html',
+  '/Chick-Bitch/styles.css',
+  '/Chick-Bitch/app.js',
+  '/Chick-Bitch/manifest.json',
+  '/Chick-Bitch/offline.html',
+  '/Chick-Bitch/main_character_01.png',
+  '/Chick-Bitch/main_character_02.png',
+  '/Chick-Bitch/main_character_03.png',
+  '/Chick-Bitch/icons/icon-192x192.png',
+  '/Chick-Bitch/icons/icon-512x512.png'
 ];
 
-const OFFLINE_URL = '/offline.html';
+const OFFLINE_URL = '/Chick-Bitch/offline.html';
 
 // 安裝 Service Worker
 self.addEventListener('install', (event) => {
