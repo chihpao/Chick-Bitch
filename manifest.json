@@ -1,0 +1,53 @@
+{
+  "name": "小雞掰 PWA",
+  "short_name": "小雞掰",
+  "description": "一個可愛的互動式虛擬寵物遊戲",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f9f9f9",
+  "theme_color": "#4CAF50",
+  "prefer_related_applications": false,
+  "categories": ["games", "entertainment", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "開始遊戲",
+      "short_name": "開始",
+      "description": "開始與小雞掰互動",
+      "url": "/#start"
+    },
+    {
+      "name": "餵食小雞掰",
+      "short_name": "餵食",
+      "description": "給小雞掰餵食",
+      "url": "/#feed"
+    },
+    {
+      "name": "查看狀態",
+      "short_name": "狀態",
+      "description": "查看小雞掰的狀態",
+      "url": "/#status"
+    },
+    {
+      "name": "設定",
+      "short_name": "設定",
+      "description": "應用程式設定",
+      "url": "/#settings"
+    }
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
