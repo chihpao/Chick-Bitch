@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="小雞掰">
   <meta name="description" content="一個可愛的互動式虛擬寵物遊戲">
-  <title>小雞掰 PWA</title>
+  <title>小雞掰 PWA - 首頁</title>
   
   <!-- PWA 相關 -->
   <link rel="manifest" href="/Chick-Bitch/manifest.json">
@@ -17,119 +17,114 @@
   <link rel="apple-touch-icon" href="/Chick-Bitch/icons/icon-192x192.png">
   <link rel="apple-touch-startup-image" href="/Chick-Bitch/icons/icon-512x512.png">
   
-  <!-- 預加載關鍵資源 -->
-  <link rel="preload" href="/Chick-Bitch/app.js" as="script">
-  <link rel="preload" href="/Chick-Bitch/styles.css" as="style">
-  
   <!-- 樣式 -->
   <link rel="stylesheet" href="/Chick-Bitch/styles.css">
   
-  <!-- 防止 iOS 自動偵測電話號碼 -->
-  <meta name="format-detection" content="telephone=no">
-  
-  <!-- 防止 Android 自動將文字轉換為連結 -->
-  <meta name="format-detection" content="address=no">
-  
-  <!-- 微軟應用程式設定 -->
-  <meta name="msapplication-TileColor" content="#4CAF50">
-  <meta name="msapplication-TileImage" content="icons/icon-192x192.png">
-  
-  <!-- iOS 狀態列樣式 -->
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <style>
+    /* 首頁特定樣式 */
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    .home-container {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-image: url('/Chick-Bitch/main_character_02.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3); /* 半透明黑色覆蓋層 */
+      z-index: 1;
+    }
+    
+    .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 20px;
+      color: white;
+      max-width: 90%;
+    }
+    
+    .title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      animation: pulse 2s infinite;
+    }
+    
+    .enter-button {
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, #4CAF50, #3e8e41);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      margin-top: 30px;
+    }
+    
+    .enter-button:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    /* 適應不同螢幕尺寸 */
+    @media (max-height: 600px) {
+      .title {
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+      
+      .enter-button {
+        padding: 12px 30px;
+        font-size: 1rem;
+      }
+    }
+    
+    @media (max-width: 360px) {
+      .title {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>小雞掰 PWA</h1>
-    <button id="share-button" class="share-button" aria-label="分享">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="18" cy="5" r="3"></circle>
-        <circle cx="6" cy="12" r="3"></circle>
-        <circle cx="18" cy="19" r="3"></circle>
-        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-      </svg>
-    </button>
-  </header>
-  
-  <main>
-    <div id="character-container">
-      <div id="chicken"></div>
-    </div>
-    
-    <div id="status-indicators">
-      <div class="status-bar" id="hunger-bar">
-        <div class="status-bar-label">飢餓度</div>
-        <div class="status-bar-outer">
-          <div class="status-bar-inner" style="width: 80%"></div>
-        </div>
-      </div>
-      
-      <div class="status-bar" id="happiness-bar">
-        <div class="status-bar-label">快樂度</div>
-        <div class="status-bar-outer">
-          <div class="status-bar-inner" style="width: 70%"></div>
-        </div>
-      </div>
-      
-      <div class="status-bar" id="energy-bar">
-        <div class="status-bar-label">能量</div>
-        <div class="status-bar-outer">
-          <div class="status-bar-inner" style="width: 90%"></div>
-        </div>
-      </div>
-    </div>
-    
-    <div id="interaction">
-      <button onclick="feedChicken()">餵食</button>
-      <button onclick="danceChicken()">跳舞</button>
-      <button onclick="petChicken()">撫摸</button>
-    </div>
-    
-    <div id="food-options">
-      <div class="food-item" data-food="rice">
-        <span class="food-icon">🍚</span>
-        <span>飯</span>
-      </div>
-      <div class="food-item" data-food="fruit">
-        <span class="food-icon">🍎</span>
-        <span>水果</span>
-      </div>
-      <div class="food-item" data-food="candy">
-        <span class="food-icon">🍬</span>
-        <span>糖果</span>
-      </div>
-      <div class="food-item" data-food="meat">
-        <span class="food-icon">🍗</span>
-        <span>肉</span>
-      </div>
-    </div>
-    
-    <div id="chat-container">
-      <div id="chat-box"></div>
-      <div id="chat-input-container">
-        <input type="text" id="chat-input" placeholder="跟小雞掰說話...">
-        <button id="send-button" onclick="chatWithChicken()">送出</button>
-      </div>
-    </div>
-    
-    <div id="status-message"></div>
-  </main>
-
-  <script src="/Chick-Bitch/app.js"></script>
-  <!-- PWA 安裝提示 -->
-  <div id="install-prompt" class="install-prompt">
-    <div class="install-prompt-content">
-      <p>將「小雞掰」安裝到主螢幕，隨時隨地與小雞掰互動！</p>
-      <div class="install-buttons">
-        <button id="install-button" class="install-button">安裝</button>
-        <button id="dismiss-button" class="dismiss-button">稍後再說</button>
-      </div>
+  <div class="home-container">
+    <div class="overlay"></div>
+    <div class="content">
+      <h1 class="title">你今天機掰了嗎?</h1>
+      <button class="enter-button" onclick="window.location.href='/Chick-Bitch/app.html'">進入小雞掰世界</button>
     </div>
   </div>
   
-  <!-- 離線提示 -->
-  <div id="offline-status" class="offline-status">
-    <span>您目前處於離線狀態</span>
-  </div>
+  <script>
+    // 不再需要自動跳轉
+  </script>
 </body>
 </html>

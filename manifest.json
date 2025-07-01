@@ -2,7 +2,7 @@
   "name": "小雞掰 PWA",
   "short_name": "小雞掰",
   "description": "一個可愛的互動式虛擬寵物遊戲",
-  "start_url": "/Chick-Bitch/?source=pwa",
+  "start_url": "/Chick-Bitch/index.html?source=pwa",
   "scope": "/Chick-Bitch/",
   "display": "standalone",
   "orientation": "portrait",

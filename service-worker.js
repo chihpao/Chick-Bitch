@@ -2,6 +2,7 @@ const CACHE_NAME = '小雞掰-pwa-v2';
 const ASSETS_TO_CACHE = [
   '/Chick-Bitch/',
   '/Chick-Bitch/index.html',
+  '/Chick-Bitch/app.html',
   '/Chick-Bitch/styles.css',
   '/Chick-Bitch/app.js',
   '/Chick-Bitch/manifest.json',

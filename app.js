@@ -20,11 +20,7 @@ let happinessBar;
 let energyBar;
 let foodOptions;
 
-// PWA 安裝提示相關變量
-let deferredPrompt;
-let installPrompt;
-let installButton;
-let dismissButton;
+// PWA 相關變量已移除
 
 // 檢查是否以 PWA 模式運行
 function isRunningAsPWA() {
@@ -32,19 +28,9 @@ function isRunningAsPWA() {
          window.navigator.standalone === true;
 }
 
-// 顯示安裝提示
-function showInstallPrompt() {
-  // 檢查是否已經顯示過提示
-  if (localStorage.getItem('installPromptDismissed') !== 'true') {
-    installPrompt.classList.add('show');
-  }
-}
+// 安裝提示函數已移除
 
-// 隱藏安裝提示
-function hideInstallPrompt() {
-  installPrompt.classList.remove('show');
-  localStorage.setItem('installPromptDismissed', 'true');
-}
+// 隱藏安裝提示函數已移除
 
 // 檢查離線狀態並更新 UI
 function updateOnlineStatus() {
@@ -68,10 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
   energyBar = document.querySelector('#energy-bar .status-bar-inner');
   foodOptions = document.getElementById('food-options');
   
-  // PWA 安裝提示元素
-  installPrompt = document.getElementById('install-prompt');
-  installButton = document.getElementById('install-button');
-  dismissButton = document.getElementById('dismiss-button');
+  // PWA 安裝提示元素已移除
   
   // 分享按鈕
   const shareButton = document.getElementById('share-button');
@@ -95,40 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 註冊 Service Worker
   registerServiceWorker();
   
-  // 監聽 beforeinstallprompt 事件
-  window.addEventListener('beforeinstallprompt', (e) => {
-    // 防止 Chrome 67 及更早版本自動顯示提示
-    e.preventDefault();
-    // 保存事件，以便稍後觸發
-    deferredPrompt = e;
-    
-    // 如果沒有以 PWA 模式運行，顯示自定義安裝按鈕
-    if (!isRunningAsPWA()) {
-      showInstallPrompt();
-    }
-  });
-  
-  // 安裝按鈕點擊事件
-  if (installButton) {
-    installButton.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        // 顯示安裝提示
-        deferredPrompt.prompt();
-        // 等待用戶響應
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log(`用戶回應: ${outcome}`);
-        // 清除保存的提示
-        deferredPrompt = null;
-        // 隱藏安裝提示
-        hideInstallPrompt();
-      }
-    });
-  }
-  
-  // 稍後再說按鈕點擊事件
-  if (dismissButton) {
-    dismissButton.addEventListener('click', hideInstallPrompt);
-  }
+  // PWA 安裝提示相關代碼已移除
   
   // 監聽線上/離線狀態變化
   window.addEventListener('online', updateOnlineStatus);
