@@ -11,18 +11,26 @@
   <meta name="description" content="一個可愛的互動式虛擬寵物遊戲">
   <title>小雞掰 PWA</title>
   
+  <script>
+    // 設置路徑前綴
+    var pathPrefix = '';
+    if (window.location.hostname === 'chihpao.github.io') {
+      pathPrefix = '/Chick-Bitch';
+    }
+  </script>
+  
   <!-- PWA 相關 -->
-  <link rel="manifest" href="/Chick-Bitch/manifest.json">
-  <link rel="icon" type="image/png" href="/Chick-Bitch/icons/icon-192x192.png">
-  <link rel="apple-touch-icon" href="/Chick-Bitch/icons/icon-192x192.png">
-  <link rel="apple-touch-startup-image" href="/Chick-Bitch/icons/icon-512x512.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icons/icon-192x192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+  <link rel="apple-touch-startup-image" href="icons/icon-512x512.png">
   
   <!-- 預加載關鍵資源 -->
-  <link rel="preload" href="/Chick-Bitch/app.js" as="script">
-  <link rel="preload" href="/Chick-Bitch/styles.css" as="style">
+  <link rel="preload" href="app.js" as="script">
+  <link rel="preload" href="styles.css" as="style">
   
   <!-- 樣式 -->
-  <link rel="stylesheet" href="/Chick-Bitch/styles.css">
+  <link rel="stylesheet" href="styles.css">
   
   <!-- 防止 iOS 自動偵測電話號碼 -->
   <meta name="format-detection" content="telephone=no">
@@ -115,7 +123,26 @@
     <div id="status-message"></div>
   </main>
 
-  <script src="/Chick-Bitch/app.js"></script>
+  <script>
+    // 動態設置路徑
+    document.addEventListener('DOMContentLoaded', function() {
+      // 設置 Service Worker 路徑
+      if ('serviceWorker' in navigator) {
+        let swPath = 'service-worker.js';
+        if (window.location.hostname === 'chihpao.github.io') {
+          swPath = '/Chick-Bitch/service-worker.js';
+        }
+        navigator.serviceWorker.register(swPath)
+          .then(registration => {
+            console.log('ServiceWorker 註冊成功:', registration.scope);
+          })
+          .catch(error => {
+            console.log('ServiceWorker 註冊失敗:', error);
+          });
+      }
+    });
+  </script>
+  <script src="app.js"></script>
   <!-- PWA 安裝提示已移除 -->
   
   <!-- 離線提示 -->

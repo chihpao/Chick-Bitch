@@ -98,7 +98,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function registerServiceWorker() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/Chick-Bitch/service-worker.js')
+      // 檢測環境並設置正確的 Service Worker 路徑
+      let swPath = 'service-worker.js';
+      if (window.location.hostname === 'chihpao.github.io') {
+        swPath = '/Chick-Bitch/service-worker.js';
+      }
+      
+      navigator.serviceWorker.register(swPath)
         .then(registration => {
           console.log('ServiceWorker 註冊成功:', registration.scope);
           

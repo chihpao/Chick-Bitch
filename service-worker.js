@@ -1,27 +1,43 @@
-const CACHE_NAME = '小雞掰-pwa-v2';
-const ASSETS_TO_CACHE = [
-  '/Chick-Bitch/',
-  '/Chick-Bitch/index.html',
-  '/Chick-Bitch/app.html',
-  '/Chick-Bitch/styles.css',
-  '/Chick-Bitch/app.js',
-  '/Chick-Bitch/manifest.json',
-  '/Chick-Bitch/offline.html',
-  '/Chick-Bitch/main_character_01.png',
-  '/Chick-Bitch/main_character_02.png',
-  '/Chick-Bitch/main_character_03.png',
-  '/Chick-Bitch/icons/icon-192x192.png',
-  '/Chick-Bitch/icons/icon-512x512.png'
+const CACHE_NAME = 'chick-bitch-pwa-v1';
+
+// 根據環境設置路徑前綴
+const isGitHubPages = self.location.hostname === 'chihpao.github.io';
+const pathPrefix = isGitHubPages ? '/Chick-Bitch' : '';
+
+// 需要快取的資源列表
+const urlsToCache = [
+  isGitHubPages ? pathPrefix + '/' : '/',
+  pathPrefix + '/index.html',
+  pathPrefix + '/app.html',
+  pathPrefix + '/app.js',
+  pathPrefix + '/styles.css',
+  pathPrefix + '/manifest.json',
+  pathPrefix + '/icons/icon-192x192.png',
+  pathPrefix + '/icons/icon-512x512.png',
+  pathPrefix + '/main_character_01.png',
+  pathPrefix + '/main_character_02.png',
+  pathPrefix + '/main_character_03.png',
+  pathPrefix + '/offline.html'
 ];
 
-const OFFLINE_URL = '/Chick-Bitch/offline.html';
+// 修正路徑，移除多餘的斜線
+const fixPath = (path) => {
+  return path.replace(/\/\//g, '/');
+};
+
+// 修正所有路徑
+for (let i = 0; i < urlsToCache.length; i++) {
+  urlsToCache[i] = fixPath(urlsToCache[i]);
+}
+
+const OFFLINE_URL = fixPath(pathPrefix + '/offline.html');
 
 // 安裝 Service Worker
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        return cache.addAll(ASSETS_TO_CACHE);
+        return cache.addAll(urlsToCache);
       })
       .then(() => {
         return self.skipWaiting();
@@ -65,9 +81,8 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => {
-          // 如果網絡請求失敗，嘗試從快取中獲取
-          return caches.match(event.request)
-            .then(response => response || caches.match(OFFLINE_URL));
+          // 如果請求失敗，則返回離線頁面
+          return caches.match(OFFLINE_URL);
         })
     );
   }

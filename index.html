@@ -11,14 +11,22 @@
   <meta name="description" content="一個可愛的互動式虛擬寵物遊戲">
   <title>小雞掰 PWA - 首頁</title>
   
+  <script>
+    // 設置路徑前綴
+    var pathPrefix = '';
+    if (window.location.hostname === 'chihpao.github.io') {
+      pathPrefix = '/Chick-Bitch';
+    }
+  </script>
+  
   <!-- PWA 相關 -->
-  <link rel="manifest" href="/Chick-Bitch/manifest.json">
-  <link rel="icon" type="image/png" href="/Chick-Bitch/icons/icon-192x192.png">
-  <link rel="apple-touch-icon" href="/Chick-Bitch/icons/icon-192x192.png">
-  <link rel="apple-touch-startup-image" href="/Chick-Bitch/icons/icon-512x512.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icons/icon-192x192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+  <link rel="apple-touch-startup-image" href="icons/icon-512x512.png">
   
   <!-- 樣式 -->
-  <link rel="stylesheet" href="/Chick-Bitch/styles.css">
+  <link rel="stylesheet" href="styles.css">
   
   <style>
     /* 首頁特定樣式 */
@@ -35,9 +43,9 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
-      background-image: url('/Chick-Bitch/main_character_02.png');
+      background-image: url('main_character_02.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -60,12 +68,13 @@
       padding: 20px;
       color: white;
       max-width: 90%;
+      margin-top: 40px; /* 增加頂部間距 */
     }
     
     .title {
       font-size: 2.5rem;
       font-weight: bold;
-      margin-bottom: 30px;
+      margin-bottom: 15px; /* 減少標題與按鈕之間的間距 */
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
       animation: pulse 2s infinite;
     }
@@ -80,7 +89,7 @@
       cursor: pointer;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
       transition: all 0.3s ease;
-      margin-top: 30px;
+      margin-top: 10px; /* 減少按鈕與標題之間的間距 */
     }
     
     .enter-button:active {
@@ -119,12 +128,21 @@
     <div class="overlay"></div>
     <div class="content">
       <h1 class="title">你今天機掰了嗎?</h1>
-      <button class="enter-button" onclick="window.location.href='/Chick-Bitch/app.html'">進入小雞掰世界</button>
+      <button class="enter-button" id="enterButton">進入小雞掰世界</button>
     </div>
   </div>
   
   <script>
-    // 不再需要自動跳轉
+    // 設置按鈕點擊事件
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('enterButton').addEventListener('click', function() {
+        if (window.location.hostname === 'chihpao.github.io') {
+          window.location.href = '/Chick-Bitch/app.html';
+        } else {
+          window.location.href = 'app.html';
+        }
+      });
+    });
   </script>
 </body>
 </html>
